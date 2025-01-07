@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<packageId>faust22.TribalPlayingEnhencementMod</packageId>
+	<name>TribalPlayingEnhencementMod</name>
+	<author>faust22</author>
+	<supportedVersions>
+		<li>1.5</li>
+	</supportedVersions>
+	<description>Add 2 tribal playing mechanisms, tribal power based on territory, champion fight</description>
+	<modDependencies>
+		<li>
+			<packageId>OskarPotocki.VanillaFactionsExpanded.Core</packageId>
+			<displayName>Vanilla Expanded Framework</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/workshop/filedetails/?id=2023507013</steamWorkshopUrl>
+		</li>
+	</modDependencies>
+</ModMetaData>
