@@ -1,0 +1,11 @@
+<ThoughtDefs>
+	<ThoughtDef>
+		<defName>MyThought</defName>
+		<label>custom thought</label>
+		<description>This is a mood thought caused by MyHediff.</description>
+		<thoughtClass>Thought_Memory</thoughtClass>
+		<durationDays>5</durationDays>
+		<stackLimit>1</stackLimit>
+		<baseMoodEffect>-5</baseMoodEffect>
+	</ThoughtDef>
+</ThoughtDefs>
