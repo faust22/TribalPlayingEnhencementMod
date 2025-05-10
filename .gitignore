@@ -10,7 +10,6 @@ bin/
 obj/
 *.pdb
 *.exe
-*.dll
 
 # Ignore logs and temporary files
 *.log

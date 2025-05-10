@@ -1,0 +1,10 @@
+<HediffDefs>
+	<HediffDef>
+		<defName>MyHediff</defName>
+		<label>custom hediff</label>
+		<description>Just a test hediff.</description>
+		<initialSeverity>1.0</initialSeverity>
+		<hediffClass>TribalPlayingEnhencementMod.Hediff_MyHediff</hediffClass>
+		<tendable>false</tendable>
+	</HediffDef>
+</HediffDefs>

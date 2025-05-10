@@ -1,0 +1,19 @@
+<Defs>
+	<IncidentDef>
+		<defName>DebugApplyMyHediff</defName>
+		<label>Debug: Apply MyHediff</label>
+		<category>Misc</category>
+		<workerClass>TribalPlayingEnhencementMod.IncidentWorker_DebugGiveHediff</workerClass>
+		<targetTags>
+			<li>MapPlayer</li>
+		</targetTags>
+	</IncidentDef>
+	<IncidentDef ParentName="RaidEnemy">
+		<defName>MyCustomRaid</defName>
+		<label>Custom Raid</label>
+		<category>ThreatBig</category>
+		<workerClass>TribalPlayingEnhencementMod.MyIncidentWorker_Raid</workerClass>
+		<baseChance>0.2</baseChance>
+		<!-- Lower than normal raid chance -->
+	</IncidentDef>
+</Defs>

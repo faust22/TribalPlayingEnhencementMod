@@ -1,0 +1,10 @@
+<Defs>
+	<HediffDef>
+		<defName>TribalMod_Duelist</defName>
+		<label>duelist</label>
+		<description>This pawn is engaged in a sacred duel.</description>
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<comps/>
+	</HediffDef>
+</Defs>

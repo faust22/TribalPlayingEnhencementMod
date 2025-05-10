@@ -1,0 +1,97 @@
+public class Hediff_MyHediff : Hediff
+    {
+        public override void Tick()
+        {
+            base.Tick();
+
+            // Custom logic here
+        }
+    }
+    public class IncidentWorker_DebugGiveHediff : IncidentWorker
+    {
+        protected override bool TryExecuteWorker(IncidentParms parms)
+        {
+            if (base.TryExecuteWorker(parms))
+            {
+                Map map = (Map)parms.target;
+                Pawn pawn = map.mapPawns.FreeColonistsSpawned.FirstOrDefault();
+                if (pawn != null)
+                {
+                    HediffDef hediffDef = DefDatabase<HediffDef>.GetNamed("MyHediff");
+                    pawn.health.AddHediff(hediffDef);
+                    Messages.Message("Applied MyHediff to " + pawn.Name.ToStringShort, MessageTypeDefOf.PositiveEvent);
+                    return true;
+                }
+                else
+                {
+                    Messages.Message("debug 1", MessageTypeDefOf.PositiveEvent);
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+    /*
+    public class MyIncidentWorker_Raid : IncidentWorker_RaidEnemy
+    {
+        protected override bool TryExecuteWorker(IncidentParms parms)
+        {
+            // Call the base raid logic (spawning enemies, etc.)
+            bool result = base.TryExecuteWorker(parms);
+
+            if (result)
+            {
+                Messages.Message("A raid has started! Prepare yourself!", MessageTypeDefOf.ThreatBig, false);
+                return true;
+            }
+            else
+            {
+                Messages.Message("Debug 2", MessageTypeDefOf.PositiveEvent);
+                return false;
+            }
+        }
+    }*/
+    [HarmonyPatch(typeof(Projectile_Explosive), nameof(Projectile_Explosive.ImpactSomething))]
+    public static class MortarDetectionPatch
+    {
+        [HarmonyPostfix]
+        public static void Postfix(Projectile_Explosive __instance)
+        {
+            if (__instance.launcher != null && __instance.launcher.Faction == Faction.OfPlayer)
+            {
+                IntVec3 explosionCell = __instance.Position;
+                ReactToMortarStrike(explosionCell);
+            }
+        }
+        private static void ReactToMortarStrike(IntVec3 explosionCell)
+        {
+            Map map = Find.CurrentMap;
+            // Check all enemy lords (groups of pawns doing something)
+            foreach (Lord lord in map.lordManager.lords)
+            {
+                if (lord.faction != null && lord.faction.HostileTo(Faction.OfPlayer))
+                {
+                    if (lord.LordJob is LordJob_Siege)
+                    {
+                        // Are they close to the explosion?
+                        bool inBlastRadius = lord.ownedPawns.Any(p => p.Position.InHorDistOf(explosionCell, 20f));
+                        if (inBlastRadius)
+                        {
+                            Log.Message($"[TribalMod] Siege group hit! Triggering counterattack!");
+
+                            // Change behavior: switch to immediate assault
+                            lord.Notify_LordDestroyed();
+                            Lord newLord = LordMaker.MakeNewLord(
+                                lord.faction,
+                                new LordJob_AssaultColony(lord.faction, canKidnap: true, canTimeoutOrFlee: false),
+                                map,
+                                lord.ownedPawns
+                            );
+
+                            break; // only trigger once
+                        }
+                    }
+                }
+            }
+        }
+    }
